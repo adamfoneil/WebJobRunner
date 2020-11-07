@@ -3,11 +3,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace SetCronJob.ApiClient.Test
 {
     [TestClass]
-    public class UnitTest1
+    public class CrudTests
     {
         [TestMethod]
         public void TestMethod1()
         {
         }
+
+
     }
 }
