@@ -62,12 +62,12 @@ namespace SetCronJob.ApiClient
                 return;
             }
 
-            throw new Exception($"Can't delete more than one job at a time: {string.Join(", ", searchJobs.Take(3).Select(j => j.Name))}");
+            throw new Exception($"Can't delete more than one job at a time: {string.Join(", ", searchJobs.Take(3).Select(j => j.Id))}");
         }
 
         public async Task<IReadOnlyList<CronJob>> ListJobsAsync(string keyword = null) => await ExecuteAsync<List<CronJob>>(async () => await _api.ListJobsAsync(_token, keyword));
 
-        public async Task<CronJob> UpdateJobAsync(CronJob cronJob) => await ExecuteWithTokenAsync(cronJob, async() => await _api.UpdateJobAsync(_token, cronJob));
+        public async Task<CronJob> UpdateJobAsync(CronJob cronJob) => await ExecuteWithTokenAsync(cronJob, async() => await _api.UpdateJobAsync(cronJob));
 
         private async Task<T> ExecuteWithTokenAsync<T>(T @object, Func<Task> apiCall) where T : SetCronJobPost
         {

@@ -42,12 +42,13 @@ namespace SetCronJob.ApiClient.Test
         public void DeleteJobByName()
         {
             var client = GetClient();
-            var job = client.CreateJobAsync(SampleJob()).Result;
+            // use a random-ish name that hasn't been used in other tests
+            var job = client.CreateJobAsync(SampleJob(15)).Result;
             client.DeleteJobAsync(job.Name).Wait();
         }
 
         [TestMethod]
-        public void EditJob()
+        public void UpdateJob()
         {
             var client = GetClient();
             var job = client.CreateJobAsync(SampleJob()).Result;
@@ -65,6 +66,8 @@ namespace SetCronJob.ApiClient.Test
 
             // make sure job Id didn't change
             Assert.IsTrue(job.Id == id);
+
+            Task.Delay(1000).Wait();
 
             client.DeleteJobAsync(id).Wait();
         }

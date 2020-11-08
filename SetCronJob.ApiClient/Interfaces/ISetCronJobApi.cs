@@ -7,10 +7,10 @@ namespace SetCronJob.ApiClient.Interfaces
     internal interface ISetCronJobApi
     {
         [Post("/api/cron.add")]
-        Task CreateJobAsync([Body]CronJob cronJob);
+        Task CreateJobAsync([Body] CronJob cronJob);
 
-        [Post("/api/cron.edit?token={token}&id={cronJob.Id}")]
-        Task UpdateJobAsync(string token, [Body]CronJob cronJob);
+        [Post("/api/cron.edit?id={cronJob.Id}")]
+        Task UpdateJobAsync([Body] CronJob cronJob);
 
         [Post("/api/cron.delete?token={token}&id={id}")]
         Task DeleteJobAsync(string token, int id);
