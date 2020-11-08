@@ -4,6 +4,10 @@ using Refit;
 using SetCronJob.ApiClient.Interfaces;
 using SetCronJob.ApiClient.Models;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SetCronJob.ApiClient
@@ -13,7 +17,8 @@ namespace SetCronJob.ApiClient
         private readonly string _token;
         private readonly ISetCronJobApi _api;
 
-        private JObject _apiData;
+        private JObject _apiObjectData;
+        private JArray _apiArrayData;
 
         public Client(string token)
         {
@@ -22,29 +27,62 @@ namespace SetCronJob.ApiClient
             {
                 ExceptionFactory = async (response) =>
                 {
+                    if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
+                    {
+                        return new Exception("Service unavailable");
+                    }
+
                     var json = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<ApiResponse>(json);
                     if (result.IsSuccess)
                     {
-                        _apiData = result.Data as JObject;
+                        _apiObjectData = result.Data as JObject;
+                        _apiArrayData = result.Data as JArray;
                         return null;
                     }
 
-                    _apiData = null;
+                    _apiObjectData = null;
                     return new Exception(result.ToString());
                 }
             });
         }
 
-        public async Task<CronJob> CreateJobAsync(CronJob cronJob) => await ExecuteAsync(cronJob, async () => await _api.CreateJobAsync(cronJob));
+        public async Task<CronJob> CreateJobAsync(CronJob cronJob) => await ExecuteWithTokenAsync(cronJob, async () => await _api.CreateJobAsync(cronJob));
 
-        public async Task DeleteJob(int id) => await _api.DeleteJobAsync(_token, id);
+        public async Task DeleteJobAsync(int id) => await _api.DeleteJobAsync(_token, id);
 
-        private async Task<T> ExecuteAsync<T>(T @object, Func<Task> apiCall) where T : SetCronJobPost
+        public async Task DeleteJobAsync(string name)
+        {
+            var searchJobs = await ListJobsAsync(name);
+            if (searchJobs.Count == 1)
+            {
+                await DeleteJobAsync(searchJobs.First().Id);
+                return;
+            }
+
+            throw new Exception($"Can't delete more than one job at a time: {string.Join(", ", searchJobs.Take(3).Select(j => j.Name))}");
+        }
+
+        public async Task<IReadOnlyList<CronJob>> ListJobsAsync(string keyword = null) => await ExecuteAsync<List<CronJob>>(async () => await _api.ListJobsAsync(_token, keyword));
+
+        private async Task<T> ExecuteWithTokenAsync<T>(T @object, Func<Task> apiCall) where T : SetCronJobPost
         {
             @object.Token = _token;
             await apiCall.Invoke();
-            return _apiData?.ToObject<T>();
+            return GetApiResult<T>();
+        }
+
+        private async Task<T> ExecuteAsync<T>(Func<Task> apiCall) where T : class
+        {
+            await apiCall.Invoke();
+            return GetApiResult<T>();
+        }
+
+        private T GetApiResult<T>() where T : class
+        {
+            if (_apiObjectData != null) return _apiObjectData.ToObject<T>();
+            if (_apiArrayData != null) return _apiArrayData.ToObject<T>();
+            throw new Exception("No API result data was returned.");
         }
 
         private class ApiResponse
@@ -70,6 +108,6 @@ namespace SetCronJob.ApiClient
                     (Status.Equals("error")) ? $"{Message} (code {Code})" :
                     string.Empty;
             }
-        }      
+        }
     }
 }

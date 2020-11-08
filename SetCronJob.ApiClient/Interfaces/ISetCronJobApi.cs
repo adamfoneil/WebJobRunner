@@ -1,5 +1,6 @@
 ﻿using Refit;
 using SetCronJob.ApiClient.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SetCronJob.ApiClient.Interfaces
@@ -11,5 +12,8 @@ namespace SetCronJob.ApiClient.Interfaces
 
         [Post("/api/cron.delete?token={token}&id={id}")]
         Task DeleteJobAsync(string token, int id);
+
+        [Get("/api/cron.list?token={token}&keyword={keyword}")]
+        Task ListJobsAsync(string token, string keyword);
     }
 }
