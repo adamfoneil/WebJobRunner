@@ -30,23 +30,21 @@ namespace SetCronJob.ApiClient
                         return null;
                     }
 
+                    _apiData = null;
                     return new Exception(result.ToString());
                 }
             });
         }
 
-        public async Task<CronJob> CreateJobAsync(CronJob cronJob)
-        {
-            await _api.CreateJobAsync(SetToken(cronJob));
-            return _apiData.ToObject<CronJob>();
-        }
-            
+        public async Task<CronJob> CreateJobAsync(CronJob cronJob) => await ExecuteAsync(cronJob, async () => await _api.CreateJobAsync(cronJob));
+
         public async Task DeleteJob(int id) => await _api.DeleteJobAsync(_token, id);
 
-        private T SetToken<T>(T @object) where T : SetCronJobPost
+        private async Task<T> ExecuteAsync<T>(T @object, Func<Task> apiCall) where T : SetCronJobPost
         {
             @object.Token = _token;
-            return @object;
+            await apiCall.Invoke();
+            return _apiData?.ToObject<T>();
         }
 
         private class ApiResponse

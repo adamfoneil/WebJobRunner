@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>AO.SetCronJob.ApiClient</PackageId>
+    <Version>0.9.0-beta</Version>
+    <Authors>Adam O'Neil</Authors>
+    <Product>AO.SetCronJob.ApiClient</Product>
+    <Copyright>Copyright (c) 2020 Adam O'Neil</Copyright>
+    <Description>An API client for SetCronJob service https://www.setcronjob.com/ along with a .NET Core package for setting up MVC actions as cron jobs.</Description>
+    <PackageProjectUrl>https://github.com/adamfoneil/WebJobRunner</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/WebJobRunner</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
