@@ -10,7 +10,7 @@ namespace SetCronJob.ApiClient.Test
         [TestMethod]
         public void CreateAndDeleteJob()
         {
-            var token = Config["SetCronJob:ApiKey"];
+            var token = Config["SetCronJob:ApiToken"];
             var client = new Client(token);
             
             var job = client.CreateJobAsync(new CronJob()

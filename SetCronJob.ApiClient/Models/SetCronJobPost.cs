@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SetCronJob.ApiClient.Models
 {
@@ -7,7 +7,7 @@ namespace SetCronJob.ApiClient.Models
     /// </summary>
     public class SetCronJobPost
     {
-        [JsonPropertyName("token")]
+        [JsonProperty("token")]
         public string Token { get;  set; }
     }
 }

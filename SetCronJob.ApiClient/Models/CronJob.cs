@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
 
 namespace SetCronJob.ApiClient.Models
 {
@@ -22,45 +22,45 @@ namespace SetCronJob.ApiClient.Models
         Disabled = 3
     }
 
-    public class CronJob
+    public class CronJob : SetCronJobPost
     {
-        [JsonPropertyName("id")]
+        [JsonProperty("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("group")]
+        [JsonProperty("group")]
         public string Group { get; set; }
 
-        [JsonPropertyName("expression")]
+        [JsonProperty("expression")]
         public string Expression { get; set; }
 
-        [JsonPropertyName("timezone")]
+        [JsonProperty("timezone")]
         public string TimeZone { get; set; }
 
-        [JsonPropertyName("url")]
+        [JsonProperty("url")]
         public string Url { get; set; }
 
-        [JsonPropertyName("method")]
+        [JsonProperty("method")]
         public string Method { get; set; } = "get";
 
-        [JsonPropertyName("httpHeaders")]
+        [JsonProperty("httpHeaders")]
         public string Headers { get; set; }
 
-        [JsonPropertyName("postData")]
+        [JsonProperty("postData")]
         public string PostData { get; set;  }
 
-        [JsonPropertyName("fail")]
+        [JsonProperty("fail")]
         public int FailCount { get; set; }
 
-        [JsonPropertyName("status")]
+        [JsonProperty("status")]
         public JobStatus Status { get; set; }
 
-        [JsonPropertyName("name")]
+        [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonPropertyName("notify")]
+        [JsonProperty("notify")]
         public NotifyOptions Notify { get; set; }
 
-        [JsonPropertyName("points")]
+        [JsonProperty("points")]
         public int Points { get; set; }
     }
 }

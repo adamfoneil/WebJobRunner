@@ -1,9 +1,9 @@
-﻿using Refit;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Refit;
 using SetCronJob.ApiClient.Interfaces;
 using SetCronJob.ApiClient.Models;
 using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SetCronJob.ApiClient
@@ -13,6 +13,8 @@ namespace SetCronJob.ApiClient
         private readonly string _token;
         private readonly ISetCronJobApi _api;
 
+        private JObject _apiData;
+
         public Client(string token)
         {
             _token = token;
@@ -21,28 +23,55 @@ namespace SetCronJob.ApiClient
                 ExceptionFactory = async (response) =>
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var error = JsonSerializer.Deserialize<Error>(json);
-                    return new Exception(error.ToString());
+                    var result = JsonConvert.DeserializeObject<ApiResponse>(json);
+                    if (result.IsSuccess)
+                    {
+                        _apiData = result.Data as JObject;
+                        return null;
+                    }
+
+                    return new Exception(result.ToString());
                 }
             });
         }
 
-        public async Task<CronJob> CreateJobAsync(CronJob cronJob) => await _api.CreateJobAsync(_token, cronJob);
-
+        public async Task<CronJob> CreateJobAsync(CronJob cronJob)
+        {
+            await _api.CreateJobAsync(SetToken(cronJob));
+            return _apiData.ToObject<CronJob>();
+        }
+            
         public async Task DeleteJob(int id) => await _api.DeleteJobAsync(_token, id);
 
-        private class Error
+        private T SetToken<T>(T @object) where T : SetCronJobPost
         {
-            [JsonPropertyName("status")]
+            @object.Token = _token;
+            return @object;
+        }
+
+        private class ApiResponse
+        {
+            [JsonProperty("status")]
             public string Status { get; set; }
 
-            [JsonPropertyName("code")]
+            [JsonProperty("code")]
             public int Code { get; set; }
 
-            [JsonPropertyName("message")]
+            [JsonProperty("message")]
             public string Message { get; set; }
 
-            public override string ToString() => $"{Message} (code {Code})";
-        }
+            [JsonProperty("data")]
+            public object Data { get; set; }
+
+            public bool IsSuccess => (Status.Equals("success"));
+
+            public override string ToString()
+            {
+                return
+                    (Status.Equals("success")) ? "Success" :
+                    (Status.Equals("error")) ? $"{Message} (code {Code})" :
+                    string.Empty;
+            }
+        }      
     }
 }
