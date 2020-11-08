@@ -51,7 +51,6 @@ namespace SetCronJob.ApiClient
             return result.GetResult();
         }
     
-
         public async Task<CronJob> UpdateJobAsync(CronJob cronJob)
         {
             cronJob.Token = _token;
