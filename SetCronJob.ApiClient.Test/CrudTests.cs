@@ -16,7 +16,8 @@ namespace SetCronJob.ApiClient.Test
             var job = client.CreateJobAsync(new CronJob()
             {
                 Name = "whatever",
-                Url = "https://myjob.com/whatever"
+                Url = "https://myjob.com/whatever",
+                Status = JobStatus.Disabled
             }).Result;
 
             client.DeleteJob(job.Id).Wait();
