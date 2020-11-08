@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Refit;
+using SetCronJob.ApiClient.Exceptions;
 using SetCronJob.ApiClient.Interfaces;
 using SetCronJob.ApiClient.Models;
 using System;
@@ -29,7 +30,7 @@ namespace SetCronJob.ApiClient
                 {
                     if (response.StatusCode == HttpStatusCode.ServiceUnavailable)
                     {
-                        return new Exception("Service unavailable");
+                        return new ServiceUnavailableException();
                     }
 
                     var json = await response.Content.ReadAsStringAsync();
@@ -42,6 +43,7 @@ namespace SetCronJob.ApiClient
                     }
 
                     _apiObjectData = null;
+                    _apiArrayData = null;
                     return new Exception(result.ToString());
                 }
             });
@@ -64,6 +66,8 @@ namespace SetCronJob.ApiClient
         }
 
         public async Task<IReadOnlyList<CronJob>> ListJobsAsync(string keyword = null) => await ExecuteAsync<List<CronJob>>(async () => await _api.ListJobsAsync(_token, keyword));
+
+        public async Task<CronJob> UpdateJobAsync(CronJob cronJob) => await ExecuteWithTokenAsync(cronJob, async() => await _api.UpdateJobAsync(_token, cronJob));
 
         private async Task<T> ExecuteWithTokenAsync<T>(T @object, Func<Task> apiCall) where T : SetCronJobPost
         {

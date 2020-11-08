@@ -46,6 +46,29 @@ namespace SetCronJob.ApiClient.Test
             client.DeleteJobAsync(job.Name).Wait();
         }
 
+        [TestMethod]
+        public void EditJob()
+        {
+            var client = GetClient();
+            var job = client.CreateJobAsync(SampleJob()).Result;
+
+            int id = job.Id;
+            Task.Delay(1000).Wait();
+
+            const string newUrl = "https://updated.com/whatever1";
+           
+            job.Url = newUrl;
+            job = client.UpdateJobAsync(job).Result;
+
+            // url should be the new one
+            Assert.IsTrue(job.Url.Equals(newUrl));
+
+            // make sure job Id didn't change
+            Assert.IsTrue(job.Id == id);
+
+            client.DeleteJobAsync(id).Wait();
+        }
+
         private CronJob SampleJob(int index = 1) => new CronJob()
         {
             Name = $"whatever{index}",
