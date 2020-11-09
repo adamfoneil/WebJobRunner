@@ -22,7 +22,7 @@ namespace SampleWebApp
         {
             services.AddRazorPages();
             services.AddMvc();
-            //services.AddSetCronJob(Configuration["SetCronJob:ApiToken"]);
+            services.AddSetCronJobClient(Configuration["SetCronJob:ApiToken"]);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +48,7 @@ namespace SampleWebApp
             {
                 endpoints.MapRazorPages();
                 endpoints.MapDefaultControllerRoute();
+                endpoints.CreateCronJobs(cronJobClient, env.WebRootPath);
             });
         }
     }
