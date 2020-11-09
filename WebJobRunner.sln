@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebJobRunner.Client", "WebJobRunner.Client\WebJobRunner.Client.csproj", "{EF837CE0-E37E-482E-BC5B-5D4C1D9FA4B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetCronJob.ApiClient", "SetCronJob.ApiClient\SetCronJob.ApiClient.csproj", "{BB2A933F-71C8-4BE6-A676-12221464BC41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetCronJob.ApiClient", "SetCronJob.ApiClient\SetCronJob.ApiClient.csproj", "{BB2A933F-71C8-4BE6-A676-12221464BC41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SetCronJob.ApiClient.Test", "SetCronJob.ApiClient.Test\SetCronJob.ApiClient.Test.csproj", "{0C70ADAB-0A6F-481E-AF6D-763C548435C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetCronJob.ApiClient.Test", "SetCronJob.ApiClient.Test\SetCronJob.ApiClient.Test.csproj", "{0C70ADAB-0A6F-481E-AF6D-763C548435C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetCronJob.AspNetCore", "SetCronJob.AspNetCore\SetCronJob.AspNetCore.csproj", "{B5F93459-5A79-4908-80D3-2A6382F33558}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleWebApp", "SampleWebApp\SampleWebApp.csproj", "{E11F6250-6BC1-46DC-A41D-1D59B0751D8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EF837CE0-E37E-482E-BC5B-5D4C1D9FA4B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF837CE0-E37E-482E-BC5B-5D4C1D9FA4B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF837CE0-E37E-482E-BC5B-5D4C1D9FA4B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF837CE0-E37E-482E-BC5B-5D4C1D9FA4B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB2A933F-71C8-4BE6-A676-12221464BC41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BB2A933F-71C8-4BE6-A676-12221464BC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2A933F-71C8-4BE6-A676-12221464BC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -27,6 +25,14 @@ Global
 		{0C70ADAB-0A6F-481E-AF6D-763C548435C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C70ADAB-0A6F-481E-AF6D-763C548435C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C70ADAB-0A6F-481E-AF6D-763C548435C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5F93459-5A79-4908-80D3-2A6382F33558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F93459-5A79-4908-80D3-2A6382F33558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F93459-5A79-4908-80D3-2A6382F33558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F93459-5A79-4908-80D3-2A6382F33558}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E11F6250-6BC1-46DC-A41D-1D59B0751D8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E11F6250-6BC1-46DC-A41D-1D59B0751D8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E11F6250-6BC1-46DC-A41D-1D59B0751D8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E11F6250-6BC1-46DC-A41D-1D59B0751D8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

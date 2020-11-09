@@ -2,10 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>AO.SetCronJob.ApiClient</PackageId>
-    <Version>0.9.1-beta</Version>
+    <PackageId>SetCronJob.ApiClient</PackageId>
+    <Version>0.9.2-beta</Version>
     <Authors>Adam O'Neil</Authors>
-    <Product>AO.SetCronJob.ApiClient</Product>
+    <Product>SetCronJob.ApiClient</Product>
     <Copyright>Copyright (c) 2020 Adam O'Neil</Copyright>
     <Description>An API client for SetCronJob service https://www.setcronjob.com</Description>
     <PackageProjectUrl>https://github.com/adamfoneil/WebJobRunner</PackageProjectUrl>

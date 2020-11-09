@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SetCronJob.ApiClient
 {
-    public class Client
+    public class Client : ISetCronJobClient
     {
         private readonly string _token;
         private readonly ISetCronJobApi _api;
@@ -50,12 +50,12 @@ namespace SetCronJob.ApiClient
             var result = await _api.ListJobsAsync(_token, keyword);
             return result.GetResult();
         }
-    
+
         public async Task<CronJob> UpdateJobAsync(CronJob cronJob)
         {
             cronJob.Token = _token;
             var result = await _api.UpdateJobAsync(cronJob);
             return result.GetResult();
-        }       
+        }
     }
 }

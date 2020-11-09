@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /SetCronJob.ApiClient.Test/Config/config.json
+/SampleWebApp/Config/config.json
